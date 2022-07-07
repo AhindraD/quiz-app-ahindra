@@ -1,7 +1,7 @@
 function Question(props) {
     return (
-        <div>
-            
+        <div className="question">
+            {props.question}
         </div>
     )
 }

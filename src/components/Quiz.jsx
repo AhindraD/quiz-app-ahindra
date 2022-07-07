@@ -2,17 +2,29 @@ import Options from "./Options";
 import Question from "./Question";
 import { useState } from "react";
 
-let [score, setScore] = useState(0);
 
 function Quiz(props) {
+    let [score, setScore] = useState(0);
+    let QUESTIONS = [
+        {
+            'No of sides in a Triangle?': {
+                ONE: false,
+                TWO: false,
+                THREE: false,
+                FOUR: false,
+            }
+        },
+    ];
     return (
-        <div className="quiz-body">
-            <div className="score">
-                {score}
+        <main className="container">
+            <div className="quiz-body">
+                <div className="score">
+                    Score: {score}
+                </div>
+                <Question question={Object.keys(QUESTIONS)[0]} />
+                <Options options={Object.values(QUESTIONS)[0]} />
             </div>
-            <Question />
-            <Options />
-        </div>
+        </main>
     )
 }
 
