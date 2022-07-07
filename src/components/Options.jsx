@@ -1,12 +1,15 @@
 function Options(props) {
-    let options = Object.values(props.options)[0]
+    let options = props.options;
+    function color(id) {
+        let boolean = options[id].ifCorrect;
+        if (boolean) {
+            return 'green';
+        } else {
+            return 'red';
+        }
+    }
     return (
-        <div className="options">
-            <button className="opt1" onClick={() => { }}>ONE</button>
-            <button className="opt2" onClick={() => { }}>TWO</button>
-            <button className="opt3" onClick={() => { }}>THREE</button>
-            <button className="opt4" onClick={() => { }}>FOUR</button>
-        </div>
+        <button className="options" style={{ backgroundColor: props.bgColor }} onClick={() => { props.handleClick(color(props.id), props.id) }}>{options[props.id].text}</button>
     )
 }
 

@@ -31,7 +31,7 @@ body {
     gap: 50px;
 }
 
-.options {
+.options-container {
     min-width: 900px;
     height: 50px;
     display: flex;
@@ -39,7 +39,7 @@ body {
     gap: 100px;
 }
 
-.options button {
+.options {
     width: 150px;
     height: 40px;
     color: white;
