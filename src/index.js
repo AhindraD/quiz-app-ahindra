@@ -1,10 +1,10 @@
 import ReactDOM from 'react-dom/client';
-import Game from './components/Game';
-import '.style.css';
+import Quiz from './components/Quiz';
+import './style.css';
 
 function Run() {
   return (
-    <Game />
+    <Quiz />
   )
 }
 
