@@ -1,7 +1,7 @@
 import Options from "./Options";
 import Question from "./Question";
 import { useState } from "react";
-import Confetti from 'react-dom-confetti';
+//import Confetti from 'react-dom-confetti';
 
 // in render
 // <Confetti active={this.props.completed} />
@@ -21,36 +21,12 @@ function Quiz(props) {
         },
     ];
 
-    let [bgColor0, setBG0] = useState('#2f3a46');
-    let [bgColor1, setBG1] = useState('#2f3a46');
-    let [bgColor2, setBG2] = useState('#2f3a46');
-    let [bgColor3, setBG3] = useState('#2f3a46');
+    let [currentSelected, updateCurrentSelected] = useState(4);
 
-    function setBack(color, id) {
-        if (id === 0) {
-            setBG0(color);
-            setBG1('#2f3a46');
-            setBG2('#2f3a46');
-            setBG3('#2f3a46');
-        }
-        else if (id === 1) {
-            setBG0('#2f3a46');
-            setBG1(color);
-            setBG2('#2f3a46');
-            setBG3('#2f3a46');
-        }
-        else if (id === 2) {
-            setBG0('#2f3a46');
-            setBG1('#2f3a46');
-            setBG2(color);
-            setBG3('#2f3a46');
-        }
-        else if (id === 3) {
-            setBG0('#2f3a46');
-            setBG1('#2f3a46');
-            setBG2('#2f3a46');
-            setBG3(color);
-        }
+    let updateSelected = (id) => {
+        //console.log(['id', id]);
+        updateCurrentSelected(id);
+        //console.log(['currentSelected', currentSelected]);
     }
 
     return (
@@ -61,10 +37,13 @@ function Quiz(props) {
                 </div>
                 <Question question={QUESTIONS[0].que} />
                 <div className="options-container">
-                    <Options bgColor={bgColor0} id={0} options={QUESTIONS[0].opts} handleClick={setBack} />
-                    <Options bgColor={bgColor1} id={1} options={QUESTIONS[0].opts} handleClick={setBack} />
-                    <Options bgColor={bgColor2} id={2} options={QUESTIONS[0].opts} handleClick={setBack} />
-                    <Options bgColor={bgColor3} id={3} options={QUESTIONS[0].opts} handleClick={setBack} />
+                    <Options bgColor={currentSelected === 0 ? (QUESTIONS[0].opts[0].ifCorrect ? 'green' : 'red') : null} id={0} option={QUESTIONS[0].opts[0]} handleClick={updateSelected} />
+
+                    <Options bgColor={currentSelected === 1 ? (QUESTIONS[0].opts[1].ifCorrect ? 'green' : 'red') : null} id={1} option={QUESTIONS[0].opts[1]} handleClick={updateSelected} />
+
+                    <Options bgColor={currentSelected === 2 ? (QUESTIONS[0].opts[2].ifCorrect ? 'green' : 'red') : null} id={2} option={QUESTIONS[0].opts[2]} handleClick={updateSelected} />
+
+                    <Options bgColor={currentSelected === 3 ? (QUESTIONS[0].opts[3].ifCorrect ? 'green' : 'red') : null} id={3} option={QUESTIONS[0].opts[3]} handleClick={updateSelected} />
                 </div>
             </div>
         </main>
