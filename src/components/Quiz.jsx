@@ -9,6 +9,9 @@ import { useState } from "react";
 
 function Quiz(props) {
     let [score, setScore] = useState(0);
+    let [quesNo, setQuesNo] = useState(0);
+    let [currentSelected, updateCurrentSelected] = useState(null);
+
     let QUESTIONS = [
         {
             que: 'No of sides in a Triangle?',
@@ -19,13 +22,38 @@ function Quiz(props) {
                 { text: 'FOUR', ifCorrect: false, },
             ]
         },
+        {
+            que: 'No of sides in a Rectangle?',
+            opts: [
+                { text: 'ONE', ifCorrect: false, },
+                { text: 'TWO', ifCorrect: false, },
+                { text: 'THREE', ifCorrect: false, },
+                { text: 'FOUR', ifCorrect: true, },
+            ]
+        },
+        {
+            que: 'No of sides in a Circle?',
+            opts: [
+                { text: 'ONE', ifCorrect: false, },
+                { text: 'INFINITE', ifCorrect: true, },
+                { text: 'THREE', ifCorrect: false, },
+                { text: 'FOUR', ifCorrect: false, },
+            ]
+        },
     ];
 
-    let [currentSelected, updateCurrentSelected] = useState(4);
 
-    let updateSelected = (id) => {
+    let updateBoard = (id, ifCorrect) => {
         //console.log(['id', id]);
         updateCurrentSelected(id);
+        if (ifCorrect) {
+            setScore(score + 1);
+        }
+        //updating Board to show next Question with Options
+        setTimeout(function () {
+            setQuesNo(quesNo + 1)
+            updateCurrentSelected(null);
+        }, 1000)
         //console.log(['currentSelected', currentSelected]);
     }
 
@@ -35,15 +63,15 @@ function Quiz(props) {
                 <div className="score">
                     Score: {score}
                 </div>
-                <Question question={QUESTIONS[0].que} />
+                <Question question={QUESTIONS[quesNo].que} />
                 <div className="options-container">
-                    <Options bgColor={currentSelected === 0 ? (QUESTIONS[0].opts[0].ifCorrect ? 'green' : 'red') : null} id={0} option={QUESTIONS[0].opts[0]} handleClick={updateSelected} />
+                    <Options bgColor={currentSelected === 0 ? (QUESTIONS[quesNo].opts[0].ifCorrect ? 'green' : 'red') : null} id={0} option={QUESTIONS[quesNo].opts[0]} handleClick={updateBoard} />
 
-                    <Options bgColor={currentSelected === 1 ? (QUESTIONS[0].opts[1].ifCorrect ? 'green' : 'red') : null} id={1} option={QUESTIONS[0].opts[1]} handleClick={updateSelected} />
+                    <Options bgColor={currentSelected === 1 ? (QUESTIONS[quesNo].opts[1].ifCorrect ? 'green' : 'red') : null} id={1} option={QUESTIONS[quesNo].opts[1]} handleClick={updateBoard} />
 
-                    <Options bgColor={currentSelected === 2 ? (QUESTIONS[0].opts[2].ifCorrect ? 'green' : 'red') : null} id={2} option={QUESTIONS[0].opts[2]} handleClick={updateSelected} />
+                    <Options bgColor={currentSelected === 2 ? (QUESTIONS[quesNo].opts[2].ifCorrect ? 'green' : 'red') : null} id={2} option={QUESTIONS[quesNo].opts[2]} handleClick={updateBoard} />
 
-                    <Options bgColor={currentSelected === 3 ? (QUESTIONS[0].opts[3].ifCorrect ? 'green' : 'red') : null} id={3} option={QUESTIONS[0].opts[3]} handleClick={updateSelected} />
+                    <Options bgColor={currentSelected === 3 ? (QUESTIONS[quesNo].opts[3].ifCorrect ? 'green' : 'red') : null} id={3} option={QUESTIONS[quesNo].opts[3]} handleClick={updateBoard} />
                 </div>
             </div>
         </main>
