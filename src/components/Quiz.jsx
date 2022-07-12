@@ -1,6 +1,7 @@
 import Options from "./Options";
 import Question from "./Question";
 import { useState } from "react";
+import QUESTIONS from "./QUESTIONS";
 //import Confetti from 'react-dom-confetti';
 
 // in render
@@ -11,36 +12,6 @@ function Quiz(props) {
     let [score, setScore] = useState(0);
     let [quesNo, setQuesNo] = useState(0);
     let [currentSelected, updateCurrentSelected] = useState(null);
-
-    let QUESTIONS = [
-        {
-            que: 'No of sides in a Triangle?',
-            opts: [
-                { text: 'ONE', ifCorrect: false, },
-                { text: 'TWO', ifCorrect: false, },
-                { text: 'THREE', ifCorrect: true, },
-                { text: 'FOUR', ifCorrect: false, },
-            ]
-        },
-        {
-            que: 'No of sides in a Rectangle?',
-            opts: [
-                { text: 'ONE', ifCorrect: false, },
-                { text: 'TWO', ifCorrect: false, },
-                { text: 'THREE', ifCorrect: false, },
-                { text: 'FOUR', ifCorrect: true, },
-            ]
-        },
-        {
-            que: 'No of sides in a Circle?',
-            opts: [
-                { text: 'ONE', ifCorrect: false, },
-                { text: 'INFINITE', ifCorrect: true, },
-                { text: 'THREE', ifCorrect: false, },
-                { text: 'FOUR', ifCorrect: false, },
-            ]
-        },
-    ];
 
 
     let updateBoard = (id, ifCorrect) => {
