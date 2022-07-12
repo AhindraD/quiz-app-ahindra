@@ -2,7 +2,7 @@ import Options from "./Options";
 import Question from "./Question";
 import { useState } from "react";
 import QUESTIONS from "./QUESTIONS";
-//import Confetti from 'react-dom-confetti';
+import Confetti from 'react-dom-confetti';
 
 // in render
 // <Confetti active={this.props.completed} />
@@ -12,19 +12,21 @@ function Quiz(props) {
     let [score, setScore] = useState(0);
     let [quesNo, setQuesNo] = useState(0);
     let [currentSelected, updateCurrentSelected] = useState(null);
-
+    let [confettiActive, setConfettiActive] = useState(false);
 
     let updateBoard = (id, ifCorrect) => {
         //console.log(['id', id]);
         updateCurrentSelected(id);
         if (ifCorrect) {
             setScore(score + 1);
+            setConfettiActive(true);
         }
         //updating Board to show next Question with Options
         setTimeout(function () {
             setQuesNo(quesNo + 1)
-            updateCurrentSelected(null);
-        }, 1000)
+            updateCurrentSelected(null); 
+            setConfettiActive(false);
+        }, 2500)
         //console.log(['currentSelected', currentSelected]);
     }
 
@@ -44,6 +46,7 @@ function Quiz(props) {
 
                     <Options bgColor={currentSelected === 3 ? (QUESTIONS[quesNo].opts[3].ifCorrect ? 'green' : 'red') : null} id={3} option={QUESTIONS[quesNo].opts[3]} handleClick={updateBoard} />
                 </div>
+                <Confetti active={confettiActive} />
             </div>
         </main>
     )
