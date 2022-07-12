@@ -68,9 +68,9 @@ function Quiz(props) {
                 </div>
                 <Confetti active={confettiActive} />
             </div>
-            <div style={{ width: `${timerWidth}vw` }} className="timer"></div>
+            <div style={{ width: `${timerWidth}vw`, backgroundColor: timerWidth < 75 ? timerWidth < 35 ? 'red' : 'orange' : null }} className="timer"></div>
             <div className="timer-border"></div>
-        </main>
+        </main >
     )
 }
 
