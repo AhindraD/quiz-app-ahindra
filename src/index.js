@@ -1,10 +1,13 @@
 import ReactDOM from 'react-dom/client';
 import Quiz from './components/Quiz';
 import './style.css';
+import { BrowserRouter } from "react-router-dom";
 
 function Run() {
   return (
-    <Quiz />
+    <BrowserRouter>
+      <Quiz />
+    </BrowserRouter>
   )
 }
 
