@@ -1,6 +1,6 @@
 import Options from "./Options";
 import Question from "./Question";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import QUESTIONS from "./QUESTIONS";
 import Confetti from 'react-dom-confetti';
 
@@ -13,10 +13,30 @@ function Quiz(props) {
     let [quesNo, setQuesNo] = useState(0);
     let [currentSelected, updateCurrentSelected] = useState(null);
     let [confettiActive, setConfettiActive] = useState(false);
+    let [timerWidth, setTimerWidth] = useState(100);
+
+    let intervalID;
+    let timeOutID;
+    useEffect(() => {
+        console.log('rendered from useEffect');
+        intervalID = setInterval(function () {
+            setTimerWidth((width) => width - 2);//update instantly
+        }, 100)
+
+        timeOutID = setInterval(function () {
+            setQuesNo(quesNo + 1);
+        }, 5100)
+
+        return () => {
+            clearInterval(intervalID);
+            clearTimeout(timeOutID);
+            setTimerWidth(100);
+        };
+    }, [quesNo]);//question no depedency
 
     let updateBoard = (id, ifCorrect) => {
         //console.log(['id', id]);
-        updateCurrentSelected(id);
+        updateCurrentSelected(id);//update batch by batch
         if (ifCorrect) {
             setScore(score + 1);
             setConfettiActive(true);
@@ -24,7 +44,7 @@ function Quiz(props) {
         //updating Board to show next Question with Options
         setTimeout(function () {
             setQuesNo(quesNo + 1)
-            updateCurrentSelected(null); 
+            updateCurrentSelected(null);
             setConfettiActive(false);
         }, 2500)
         //console.log(['currentSelected', currentSelected]);
@@ -48,6 +68,8 @@ function Quiz(props) {
                 </div>
                 <Confetti active={confettiActive} />
             </div>
+            <div style={{ width: `${timerWidth}vw` }} className="timer"></div>
+            <div className="timer-border"></div>
         </main>
     )
 }
