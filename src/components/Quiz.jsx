@@ -36,16 +36,10 @@ function Quiz(props) {
 
         timeOutID.current = setInterval(function () {
             if (quesNo === QUESTIONS.length - 1) {
-                //for RESULT Table
-                generateResultTable(null, false);
                 setEnd(true);
                 navigate('/result');
                 clearTimeout(timeOutID.current);
             } else if (quesNo < QUESTIONS.length - 1) {
-                if (currentSelected === null) {
-                    //for RESULT Table
-                    generateResultTable(null, false);
-                }
                 setQuesNo(quesNo + 1);
             }
         }, 5100)
@@ -56,7 +50,7 @@ function Quiz(props) {
             setTimerWidth(100);
         };
         // eslint-disable-next-line
-    }, [quesNo,currentSelected]);//(question no) depedency
+    }, [quesNo]);//(question no) depedency
 
     let updateBoard = (id, ifCorrect) => {
         //console.log(['id', id]);
