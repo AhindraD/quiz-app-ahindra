@@ -57,7 +57,7 @@ function Quiz(props) {
             updateCurrentSelected(null);
         };
         // eslint-disable-next-line
-    }, [quesNo]);//(question no) depedency
+    }, [quesNo,currentSelected]);//(question no) depedency
 
     let updateBoard = (id, ifCorrect) => {
         //console.log(['id', id]);
