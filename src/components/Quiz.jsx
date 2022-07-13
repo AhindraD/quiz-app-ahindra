@@ -53,6 +53,7 @@ function Quiz(props) {
             clearTimeout(timeOutID.current);
             setTimerWidth(100);
         };
+        // eslint-disable-next-line
     }, [quesNo]);//(question no) depedency
 
     let updateBoard = (id, ifCorrect) => {
