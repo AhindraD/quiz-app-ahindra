@@ -1,15 +1,35 @@
 function Result(props) {
-    let resultArr=props.result;
+    let resultArr = props.result.slice();
+    //console.log(resultArr);
     return (
-        <table className="result">
-            {resultArr.map((elem)=>{
-                return <tr>
-                    <td className="q">{elem[0]}</td>
-                    <td className="a">{elem[1]}</td>
-                    <td className="c">{elem[2]}</td>
-                </tr>
-            })}
-        </table>
+        <div className="result-container">
+            <table className="result">
+                <thead>
+                    <tr>
+                        <th>QUESTION</th>
+                        <th>ANSWER</th>
+                        <th>Correct Option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {resultArr.map((elem, index) => {
+                        return (
+                            <tr key={index}>
+                                <td className="q">{elem.que}</td>
+                                <td className="a" style={{ backgroundColor: elem.got ? 'green' : 'red' }}>{elem.select}</td>
+                                <td className="c">{elem.correct}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>SCORE :</th>
+                        <th colSpan={2}>{props.score}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     )
 }
 

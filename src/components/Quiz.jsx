@@ -8,6 +8,7 @@ import {
     Link,
     Routes,
     Route,
+    generatePath,
 } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function Quiz(props) {
-    let RESULT = [];
+    let [RESULT, setRESULT] = useState([]);
     const navigate = useNavigate();
 
     let [score, setScore] = useState(0);
@@ -24,6 +25,8 @@ function Quiz(props) {
     let [currentSelected, updateCurrentSelected] = useState(null);
     let [confettiActive, setConfettiActive] = useState(false);
     let [timerWidth, setTimerWidth] = useState(100);
+    let [end, setEnd] = useState(false);
+
 
     let intervalID = useRef();
     let timeOutID = useRef();
@@ -34,7 +37,14 @@ function Quiz(props) {
         }, 100)
 
         timeOutID.current = setInterval(function () {
-            setQuesNo(quesNo + 1);
+            if (quesNo >= QUESTIONS.length - 1) {
+                setEnd(true);
+                navigate('/result');
+            } else {
+                //for RESULT Table
+                //generateReultTable(null, false)
+                setQuesNo(quesNo + 1);
+            }
         }, 5100)
 
         return () => {
@@ -50,18 +60,7 @@ function Quiz(props) {
         clearInterval(intervalID.current);
 
         //for RESULT Table
-        let currQues = QUESTIONS[quesNo].que;
-        let currSelected = QUESTIONS[quesNo].opts[id].text;
-        let currCorrect;
-        for (let i = 0; i < QUESTIONS[quesNo].opts; i++) {
-            let tempAns = QUESTIONS[quesNo].opts[i];
-            if (tempAns.ifCorrect) {
-                currCorrect = tempAns.text;
-                break;
-            }
-        }
-        RESULT.push([currQues, currSelected, currCorrect]);
-
+        generateReultTable(id, ifCorrect);
 
         if (ifCorrect) {
             setScore(score + 1);
@@ -69,7 +68,8 @@ function Quiz(props) {
         }
         //updating Board to show next Question with Options
         setTimeout(function () {
-            if (quesNo == QUESTIONS.length - 1) {
+            if (quesNo >= QUESTIONS.length - 1) {
+                setEnd(true);
                 navigate('/result');
             } else {
                 setQuesNo(quesNo + 1)
@@ -78,6 +78,27 @@ function Quiz(props) {
             }
         }, 2500)
         //console.log(['currentSelected', currentSelected]);
+    }
+
+    function generateReultTable(id, ifCorrect) {
+        let currQues = QUESTIONS[quesNo].que;
+        let currSelected = (id === null) ? '-' : QUESTIONS[quesNo].opts[id].text;
+        let currCorrect = null;
+        for (let i = 0; i < QUESTIONS[quesNo].opts.length; i++) {
+            let tempAns = QUESTIONS[quesNo].opts[i];
+            if (tempAns.ifCorrect) {
+                currCorrect = tempAns.text;
+                break;
+            }
+        }
+        let currResultObj = {
+            'que': currQues,
+            'select': currSelected,
+            'correct': currCorrect,
+            'got':ifCorrect,
+        };
+        setRESULT((RESULT) => RESULT.concat([currResultObj]));
+        console.log(RESULT);
     }
 
     return (
@@ -104,7 +125,8 @@ function Quiz(props) {
                     <div className="timer-border"></div>
                 </main >
             } />
-            <Route path='/result' element={<Result result={RESULT} />} />
+
+            {end ? <Route path='/result' element={<Result result={RESULT} score={score} />} /> : null}
         </Routes>
     )
 }
