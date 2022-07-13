@@ -42,8 +42,10 @@ function Quiz(props) {
                 navigate('/result');
                 clearTimeout(timeOutID.current);
             } else if (quesNo < QUESTIONS.length - 1) {
-                //for RESULT Table
-                generateResultTable(null, false);
+                if (currentSelected === null) {
+                    //for RESULT Table
+                    generateResultTable(null, false);
+                }
                 setQuesNo(quesNo + 1);
             }
         }, 5100)
@@ -52,6 +54,7 @@ function Quiz(props) {
             clearInterval(intervalID.current);
             clearTimeout(timeOutID.current);
             setTimerWidth(100);
+            updateCurrentSelected(null);
         };
         // eslint-disable-next-line
     }, [quesNo]);//(question no) depedency
