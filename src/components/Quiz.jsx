@@ -73,6 +73,7 @@ function Quiz(props) {
             if (quesNo === QUESTIONS.length - 1) {
                 setEnd(true);
                 navigate('/result');
+                clearTimeout(timeOutID.current);
             } else if (quesNo < QUESTIONS.length - 1) {
                 setQuesNo(quesNo + 1)
                 updateCurrentSelected(null);
