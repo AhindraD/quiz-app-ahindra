@@ -37,12 +37,15 @@ function Quiz(props) {
         }, 100)
 
         timeOutID.current = setInterval(function () {
-            if (quesNo >= QUESTIONS.length - 1) {
+            if (quesNo === QUESTIONS.length - 1) {
+                //for RESULT Table
+                generateReultTable(null, false);
                 setEnd(true);
                 navigate('/result');
-            } else {
+                clearTimeout(timeOutID.current);
+            } else if (quesNo < QUESTIONS.length - 1) {
                 //for RESULT Table
-                //generateReultTable(null, false)
+                generateReultTable(null, false);
                 setQuesNo(quesNo + 1);
             }
         }, 5100)
@@ -68,10 +71,10 @@ function Quiz(props) {
         }
         //updating Board to show next Question with Options
         setTimeout(function () {
-            if (quesNo >= QUESTIONS.length - 1) {
+            if (quesNo === QUESTIONS.length - 1) {
                 setEnd(true);
                 navigate('/result');
-            } else {
+            } else if (quesNo < QUESTIONS.length - 1) {
                 setQuesNo(quesNo + 1)
                 updateCurrentSelected(null);
                 setConfettiActive(false);
@@ -95,7 +98,7 @@ function Quiz(props) {
             'que': currQues,
             'select': currSelected,
             'correct': currCorrect,
-            'got':ifCorrect,
+            'got': ifCorrect,
         };
         setRESULT((RESULT) => RESULT.concat([currResultObj]));
         console.log(RESULT);
