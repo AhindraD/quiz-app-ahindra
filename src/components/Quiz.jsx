@@ -5,10 +5,8 @@ import QUESTIONS from "./QUESTIONS";
 import Confetti from 'react-dom-confetti';
 import Result from "./Result";
 import {
-    Link,
     Routes,
     Route,
-    generatePath,
 } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -39,13 +37,13 @@ function Quiz(props) {
         timeOutID.current = setInterval(function () {
             if (quesNo === QUESTIONS.length - 1) {
                 //for RESULT Table
-                generateReultTable(null, false);
+                generateResultTable(null, false);
                 setEnd(true);
                 navigate('/result');
                 clearTimeout(timeOutID.current);
             } else if (quesNo < QUESTIONS.length - 1) {
                 //for RESULT Table
-                generateReultTable(null, false);
+                generateResultTable(null, false);
                 setQuesNo(quesNo + 1);
             }
         }, 5100)
@@ -55,7 +53,7 @@ function Quiz(props) {
             clearTimeout(timeOutID.current);
             setTimerWidth(100);
         };
-    }, [quesNo]);//question no depedency
+    }, [quesNo]);//(question no) depedency
 
     let updateBoard = (id, ifCorrect) => {
         //console.log(['id', id]);
@@ -63,7 +61,7 @@ function Quiz(props) {
         clearInterval(intervalID.current);
 
         //for RESULT Table
-        generateReultTable(id, ifCorrect);
+        generateResultTable(id, ifCorrect);
 
         if (ifCorrect) {
             setScore(score + 1);
@@ -83,7 +81,7 @@ function Quiz(props) {
         //console.log(['currentSelected', currentSelected]);
     }
 
-    function generateReultTable(id, ifCorrect) {
+    function generateResultTable(id, ifCorrect) {
         let currQues = QUESTIONS[quesNo].que;
         let currSelected = (id === null) ? '-' : QUESTIONS[quesNo].opts[id].text;
         let currCorrect = null;
