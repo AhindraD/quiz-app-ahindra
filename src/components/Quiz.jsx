@@ -54,7 +54,6 @@ function Quiz(props) {
             clearInterval(intervalID.current);
             clearTimeout(timeOutID.current);
             setTimerWidth(100);
-            //updateCurrentSelected(null);
         };
         // eslint-disable-next-line
     }, [quesNo,currentSelected]);//(question no) depedency
